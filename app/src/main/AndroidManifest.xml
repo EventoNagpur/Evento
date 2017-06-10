@@ -17,8 +17,9 @@
         </activity>
         <activity android:name=".MainPage">
             <intent-filter>
-        <action android:name="evento.example.com.evento.MainPage" />
-        <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="evento.example.com.evento.MainPage" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
