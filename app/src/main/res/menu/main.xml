@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="SIGN OUT"
-        android:id="@+id/menu_sign_out"/>
-    <item android:title="DLETE ACCOUNT"
-        android:id="@+id/menu_delete_account"/>
+        android:id="@+id/menu_sign_out"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -31,6 +31,11 @@ public class Taareekh {
         }
     }
 
+    @Override
+    public String toString() {
+        return day+"."+month+"."+year;
+    }
+
     public int getDay() {
         return day;
     }

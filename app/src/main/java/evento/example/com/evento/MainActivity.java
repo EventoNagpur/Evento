@@ -4,27 +4,20 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
 import android.widget.Button;
-import android.support.design.widget.Snackbar;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.ResultCodes;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,19 +26,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button SignIn;
-    TextView UserInfo;
+
     private static final int RC_SIGN_IN = 123;
     FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Whatsuo?");
+
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             startActivity(new Intent(this, MainPage.class));
@@ -86,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Successfully signed in
             if (resultCode == ResultCodes.OK) {
                 Toast.makeText(getApplicationContext(), "SUCCESSFULLY SIGNED IN", Toast.LENGTH_LONG).show();
-
                 final FirebaseUser firebaseUser=auth.getCurrentUser();
                 final String uid = firebaseUser.getUid();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -135,17 +126,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     int gender;
-                                    String name,email,url;
                                     Taareekh dob;
-
+                                    String email;
+                                    String name;
                                     gender = Integer.parseInt(input.getText().toString());
                                     dob=new Taareekh(Integer.parseInt(day.getText().toString()),
                                             Integer.parseInt(month.getText().toString()),
                                             Integer.parseInt(year.getText().toString()));
-                                    name=firebaseUser.getDisplayName();
                                     email=firebaseUser.getEmail();
-                                    url=firebaseUser.getPhotoUrl().toString();
-                                    User current=new User(name,email,uid,url,gender,dob);
+                                    name=firebaseUser.getDisplayName();
+                                    if(name==null)
+                                        name="Name has'nt been set";
+                                    User current=new User(name,email,gender,dob);
                                     myRef.child("users").child(uid).setValue(current);
                                     startActivity(new Intent(MainActivity.this, MainPage.class));
 
@@ -178,20 +170,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (response == null) {
                     // User pressed back button
                     Toast.makeText(getApplicationContext(), "SIGN IN CANCELLED", Toast.LENGTH_LONG).show();
-                    UserInfo.setText("SIGN IN CANCELLED");
+
                     return;
                 }
 
                 if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
                     Toast.makeText(getApplicationContext(), "NETWORK IS DOWN", Toast.LENGTH_LONG).show();
-                    UserInfo.setText("NETWORK IS DOWN");
 
                     return;
                 }
 
                 if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
                     Toast.makeText(getApplicationContext(), "SOME ERROR OCCURED", Toast.LENGTH_LONG).show();
-                    UserInfo.setText("SOME ERROR OCCURED");
                     return;
                 }
             }

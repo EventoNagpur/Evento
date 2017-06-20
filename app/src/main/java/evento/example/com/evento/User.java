@@ -5,18 +5,16 @@ package evento.example.com.evento;
  */
 
 public class User {
-    String name,email,uid,url;
+    String name,email;
     int gender;
     Taareekh dob;
     User(){
 
     }
 
-    public User(String name, String email, String uid, String url, int gender, Taareekh dob) {
+    public User(String name, String email, int gender, Taareekh dob) {
         this.name = name;
         this.email = email;
-        this.uid = uid;
-        this.url = url;
         this.gender = gender;
         this.dob = dob;
     }
@@ -35,22 +33,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public int getGender() {
